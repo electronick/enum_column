@@ -14,11 +14,9 @@ Gem::Specification.new do |s|
      "lib/enum/active_record_helper.rb",
      "lib/enum/enum_adapter.rb",
      "lib/enum/mysql_adapter.rb",
-     "lib/enum/postgresql_adapter.rb",
      "lib/enum/quoting.rb",
      "lib/enum/schema_definitions.rb",
      "lib/enum/schema_statements.rb",
-     "lib/enum/sqlite3_adapter.rb",
      "lib/enum/validations.rb"
   ]
   s.require_paths = ["lib"]
