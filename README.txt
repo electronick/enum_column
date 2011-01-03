@@ -1,9 +1,14 @@
 Overview
 
-  This plugin is an ROR extension to support enumerations in the database schema using the enum type in MySQL. Currently only MySQL is implemented.
+  This gem is a ROR extension to support enumerations in the database schema using the enum type in MySQL. Currently only MySQL is implemented.
   Tested with Rails 3, for Rails 2 you should better use enum-column plugin (http://rubyforge.org/projects/enum-column/)
 
 How to use it.
+
+In you Gemfile:
+
+  gem 'enum_column', :git => 'git://github.com/electronick/enum_column.git'
+
 
 In your schema:
 
