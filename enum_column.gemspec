@@ -6,6 +6,7 @@
 Gem::Specification.new do |s|
   s.name = %q{enum_column}
   s.version = "0.7.0"
+  s.author = "electronick"
 
   s.files = [
      "README.txt",
