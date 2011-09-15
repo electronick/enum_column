@@ -3,7 +3,7 @@
 # values and adds the common type management code for the adapters.
 
 column_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
-  ActiveRecord::ConnectionAdapters::Column
+  ActiveRecord::ConnectionAdapters::MysqlColumn
 else
   ActiveRecord::ConnectionAdapters::Mysql2Column
 end
