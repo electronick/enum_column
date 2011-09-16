@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name = %q{enum_column3}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
   s.authors = ['Nick Pohodnya']
 
   s.files = [
      "README.txt",
-     "LICENCE",
+     "LICENSE",
      "init.rb",
      "lib/enum_column.rb",
      "lib/enum/active_record_helper.rb",
