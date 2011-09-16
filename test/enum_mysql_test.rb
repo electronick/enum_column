@@ -2,18 +2,6 @@ require File.dirname(__FILE__) + '/test_helper'
 require 'fixtures/enumeration'
 
 class EnumerationsTest < Test::Unit::TestCase
-  class EnumController < ActionController::Base
-    def test1
-      @test = Enumeration.new
-      render :inline => "<%= input('test', 'severity')%>"
-    end
-
-    def test2
-      @test = Enumeration.new
-      render :inline => "<%= enum_radio('test', 'severity')%>"
-    end
-  end
-
   def setup
     Enumeration.connection.execute 'DELETE FROM enumerations'
   end
