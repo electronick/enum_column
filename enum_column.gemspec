@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{enum_column3}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
   s.authors = ['Nick Pohodnya']
 
   s.files = [
@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
      "LICENSE",
      "init.rb",
      "lib/enum_column.rb",
+     "lib/enum_column3.rb",
      "lib/enum/active_record_helper.rb",
      "lib/enum/enum_adapter.rb",
      "lib/enum/mysql_adapter.rb",
