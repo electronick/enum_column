@@ -2,13 +2,13 @@
 # This module provides all the column helper methods to deal with the
 # values and adds the common type management code for the adapters.
 
-#column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Column
-#  ActiveRecord::ConnectionAdapters::Mysql2Column
-#else
-#  ActiveRecord::ConnectionAdapters::Column
-#end
+column_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
+  ActiveRecord::ConnectionAdapters::MysqlColumn
+else
+  ActiveRecord::ConnectionAdapters::Mysql2Column
+end
 
-ActiveRecord::ConnectionAdapters::Mysql2Column.module_eval do
+column_class.module_eval do
 
   alias __klass_enum klass
   # The class for enum is Symbol.
