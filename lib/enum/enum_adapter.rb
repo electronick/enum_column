@@ -2,10 +2,10 @@
 # This module provides all the column helper methods to deal with the
 # values and adds the common type management code for the adapters.
 
-column_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
-  ActiveRecord::ConnectionAdapters::MysqlColumn
-else
+column_class = if defined? ActiveRecord::ConnectionAdapters::Mysql2Column
   ActiveRecord::ConnectionAdapters::Mysql2Column
+else
+  ActiveRecord::ConnectionAdapters::MysqlColumn
 end
 
 column_class.module_eval do

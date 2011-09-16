@@ -1,16 +1,8 @@
-class Railtie < Rails::Railtie
-  initializer "enum_column.initialize" do |app|
+if defined?(::Rails::Railtie)
+  class EnumColumnRailtie < Rails::Railtie
     ActiveSupport.on_load :active_record do
+      require 'enum/mysql_adapter'
       require 'enum/enum_adapter'
-      #require 'enum/mysql_adapter' #if defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
-      if defined? ActiveRecord::ConnectionAdapters::MysqlAdapter
-        if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
-          #we are using JRuby
-          require 'enum/jdbcmysql_adapter'
-        else
-          require 'enum/mysql_adapter'
-        end
-      end
       require 'enum/schema_statements'
       require 'enum/schema_definitions'
       require 'enum/quoting'
@@ -22,10 +14,3 @@ class Railtie < Rails::Railtie
     end
   end
 end
-
-
-
-
-
-
-
