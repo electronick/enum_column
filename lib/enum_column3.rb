@@ -1,0 +1,1 @@
+require 'enum_column'
