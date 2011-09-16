@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enum_column}
-  s.version = "0.7.0"
+  s.version = "0.7.1"
   s.authors = ['Nick Pohodnya']
 
   s.files = [
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
      "lib/enum/validations.rb"
   ]
   s.require_paths = ["lib"]
-  s.summary = %q{Enable enum type for db.}
+  s.summary = %q{Enable enum type for MySQL db.}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
