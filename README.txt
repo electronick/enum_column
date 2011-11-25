@@ -14,7 +14,7 @@ How to use it.
 
 In you Gemfile:
 
-  gem 'enum_column3'
+  gem 'enum_column3', :git => 'git://github.com/debaillie/enum_column.git'
 
 In your schema:
 
