@@ -20,7 +20,7 @@ if defined?(ActionView::Base)
 			module FormOptionsHelper
 				#def select
 				def enum_select(object, method, options={}, html_options={})
-					InstanceTag.new(object.class.to_s.downcase, method, self, options.delete(:object)).to_enum_select_tag(options, html_options)
+					InstanceTag.new(object, method, self, options.delete(:object)).to_enum_select_tag(options, html_options)
 				end
 			end
 
