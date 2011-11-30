@@ -20,7 +20,7 @@ if defined?(ActionView::Base)
 			module FormOptionsHelper
 				#def select
 				def enum_select(object, method, options={}, html_options={})
-					InstanceTag.new(object.class.to_s.downcase, method, self, options.delete(:object)).to_enum_select_tag(options, html_options)
+					InstanceTag.new(object, method, self, options.delete(:object)).to_enum_select_tag(options, html_options)
 				end
 			end
 
@@ -31,7 +31,7 @@ if defined?(ActionView::Base)
 						if (value = self.object.__send__(method_name.to_sym))
 							options[:selected] ||= value.to_s
 						else
-              options[:include_blank] = false #enums.allows_nil? if options[:include_blank].nil?
+              options[:include_blank] = options[:include_blank] == true
 						end
 					end
 					to_select_tag(choices, options, html_options)
