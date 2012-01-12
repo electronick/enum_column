@@ -31,7 +31,7 @@ if defined?(ActionView::Base)
 						if (value = self.object.__send__(method_name.to_sym))
 							options[:selected] ||= value.to_s
 						else
-              options[:include_blank] = enums.allows_nil? if options[:include_blank].nil?
+              options[:include_blank] = options[:include_blank] == true
 						end
 					end
 					to_select_tag(choices, options, html_options)
