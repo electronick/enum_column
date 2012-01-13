@@ -25,16 +25,16 @@ if defined?(ActionView::Base)
 			end
 
 			class InstanceTag
-				def to_enum_select_tag(options, html_options={})					
+				def to_enum_select_tag(options, html_options={})
 					if self.object.respond_to?(method_name.to_sym)
-						choices = self.object.send("column_for_attribute", method_name).limit
+            column = self.object.column_for_attribute(method_name)
 						if (value = self.object.__send__(method_name.to_sym))
 							options[:selected] ||= value.to_s
 						else
-              options[:include_blank] = enums.allows_nil? if options[:include_blank].nil?
+              options[:include_blank] = column.null if options[:include_blank].nil?
 						end
 					end
-					to_select_tag(choices, options, html_options)
+					to_select_tag(column.limit, options, html_options)
 				end
 
 				#initialize record_name, method, self
