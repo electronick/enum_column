@@ -75,7 +75,7 @@ private
   alias __extract_limit_enum extract_limit
   def extract_limit(sql_type)
     if sql_type =~ /^enum/i
-      sql_type.sub(/^enum\('([^)]+)'\)/i, '\1').split("','").map { |v| v.intern }
+      sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
     else
       __extract_limit_enum(sql_type)
     end
