@@ -58,3 +58,11 @@ In views:
         <%= f.enum_select :severity %>
      <% end %>
 
+  To use radio buttons:
+
+     <%= enum_radio(@enumeration, 'severity')%>
+     or
+     <%= form_for @enumeration do |f| %>
+        <%= f.label :severity %>
+        <%= f.enum_radio :severity %>
+     <% end %>
