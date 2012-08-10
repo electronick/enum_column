@@ -58,3 +58,18 @@ In views:
         <%= f.enum_select :severity %>
      <% end %>
 
+  It is also possible to pass in custom values for the attributes using a hash:
+
+    <%= enum_select(@enumeration, 'severity', {:low => 'Low severity', :medium => 'Medium severity'}) %>
+
+    Note: It is not required to supply all limit options. If one is missing, the limit will be displayed instead.
+
+  As an added bonus, this sets you right up for use with I18n like so:
+
+    <%= enum_select(@enumeration, 'severity', I18n.t('severity')) %>
+
+  And in your locale file:
+
+    severity:
+      low: Low severity
+      medium: Medium severity
