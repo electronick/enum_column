@@ -73,7 +73,7 @@ private
   end
 
   def string_to_valid_enum_hash_code
-    Hash[limit.map(&:to_s).zip(limit)].to_s
+    Hash[enum_valid_string_assoc].to_s
   end
 
   def enum_valid_string_assoc
