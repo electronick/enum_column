@@ -27,24 +27,26 @@ column_class.module_eval do
     end
   end
 
-  alias __type_cast_enum type_cast
-  # Convert to a symbol.
-  def type_cast(value)
-    if type == :enum
-      self.class.value_to_symbol(value)
-    else
-      __type_cast_enum(value)
-    end
-  end
-
-  if respond_to?(:type_cast_code)
-    alias __type_cast_code_enum type_cast_code
-    # Code to convert to a symbol.
-    def type_cast_code(var_name)
+  if Rails::VERSION::MAJOR < 4
+    alias __type_cast_enum type_cast
+    # Convert to a symbol.
+    def type_cast(value)
       if type == :enum
-        "#{self.class.name}.value_to_symbol(#{var_name})"
+        self.class.value_to_symbol(value)
       else
-        __type_cast_code_enum(var_name)
+        __type_cast_enum(value)
+      end
+    end
+
+    if respond_to?(:type_cast_code)
+      alias __type_cast_code_enum type_cast_code
+      # Code to convert to a symbol.
+      def type_cast_code(var_name)
+        if type == :enum
+          "#{self.class.name}.value_to_symbol(#{var_name})"
+        else
+          __type_cast_code_enum(var_name)
+        end
       end
     end
   end
@@ -63,7 +65,7 @@ column_class.module_eval do
     end
   end
 
-private
+  private
   alias __simplified_type_enum simplified_type
   # The enum simple type.
   def simplified_type(field_type)
@@ -73,7 +75,7 @@ private
       __simplified_type_enum(field_type)
     end
   end
-  
+
   alias __extract_limit_enum extract_limit
   def extract_limit(sql_type)
     if sql_type =~ /^enum/i
