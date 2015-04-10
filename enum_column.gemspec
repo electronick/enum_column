@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{enum_column3}
-  s.version = "0.1.4"
+  s.version = "0.1.5"
   s.authors = ['Nick Pohodnya']
 
   s.files = [
