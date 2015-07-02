@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name    = 'enum_column_strict'
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.authors = ['Nick Pohodnya', 'Aaron Weiner']
   s.email   = 'aweiner@mdsol.com'
 
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
      "LICENSE",
      "init.rb",
      "lib/enum_column.rb",
-     "lib/enum_column3.rb",
+     "lib/enum_column_strict.rb",
      "lib/enum/active_record_helper.rb",
      "lib/enum/enum_adapter.rb",
      "lib/enum/mysql_adapter.rb",

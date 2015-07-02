@@ -1,5 +1,7 @@
 adapter_class = if defined? ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
   ActiveRecord::ConnectionAdapters::MySQLJdbcConnection
+elsif defined? ActiveRecord::ConnectionAdapters::Mysql2SpatialAdapter
+  ActiveRecord::ConnectionAdapters::Mysql2SpatialAdapter::MainAdapter
 elsif defined? ActiveRecord::ConnectionAdapters::Mysql2Adapter
   ActiveRecord::ConnectionAdapters::Mysql2Adapter
 elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter
@@ -14,4 +16,5 @@ adapter_class.module_eval do
     types[:enum] = { :name => "enum" }
     types
   end
+
 end
