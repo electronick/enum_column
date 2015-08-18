@@ -1,12 +1,11 @@
 module ActiveRecord
   module ConnectionAdapters # :nodoc:
     module SchemaStatements
-      alias __type_to_sql_enum type_to_sql
 
       # Add enumeration support for schema statement creation. This
       # will have to be adapted for every adapter if the type requires
       # anything by a list of allowed values. The overrides the standard
-      # type_to_sql method and chains back to the default. This could 
+      # type_to_sql method and chains back to the default. This could
       # be done on a per adapter basis, but is generalized here.
       #
       # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
@@ -22,6 +21,8 @@ module ActiveRecord
           __type_to_sql_enum(type, limit, precision, scale)
         end
       end
+
+      alias __type_to_sql_enum type_to_sql
     end
   end
 end
