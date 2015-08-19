@@ -4,6 +4,7 @@ module ActiveRecord
 
       # Quote a symbol as a normal string. This will support quoting of
       # enumerated values.
+      alias __quote_enum quote
       def quote(value, column = nil)
         if !value.is_a? Symbol
           __quote_enum(value, column)
@@ -12,7 +13,6 @@ module ActiveRecord
         end
       end
 
-      alias __quote_enum quote
     end
   end
 end

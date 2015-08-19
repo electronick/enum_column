@@ -9,6 +9,7 @@ module ActiveRecord
       # be done on a per adapter basis, but is generalized here.
       #
       # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
+      alias __type_to_sql_enum type_to_sql
       def type_to_sql(type, limit = nil, precision = nil, scale = nil) #:nodoc:
         if type == :enum
           native = native_database_types[type]
@@ -21,8 +22,6 @@ module ActiveRecord
           __type_to_sql_enum(type, limit, precision, scale)
         end
       end
-
-      alias __type_to_sql_enum type_to_sql
     end
   end
 end

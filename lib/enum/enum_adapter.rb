@@ -18,6 +18,7 @@ end
 column_class.module_eval do
 
   # The class for enum is Symbol.
+  alias __klass_enum klass
   def klass
     if type == :enum
       Symbol
@@ -25,9 +26,9 @@ column_class.module_eval do
       __klass_enum
     end
   end
-  alias __klass_enum klass
 
   # Convert to a symbol.
+  alias __type_cast_enum type_cast
   def type_cast(value)
     if type == :enum
       value.is_a?(Symbol) ? value : string_to_valid_enum(value)
@@ -35,9 +36,9 @@ column_class.module_eval do
       __type_cast_enum(value)
     end
   end
-  alias __type_cast_enum type_cast
 
   # Code to convert to a symbol.
+  alias __type_cast_code_enum type_cast_code
   def type_cast_code(var_name)
     if type == :enum
       "#{var_name}.is_a?(Symbol) ? #{var_name} : #{string_to_valid_enum_hash_code}[#{var_name}]"
@@ -45,11 +46,11 @@ column_class.module_eval do
       __type_cast_code_enum(var_name)
     end
   end
-  alias __type_cast_code_enum type_cast_code
 
 private
 
   # The enum simple type.
+  alias __simplified_type_enum simplified_type
   def simplified_type(field_type)
     if field_type =~ /enum/i
       :enum
@@ -57,8 +58,8 @@ private
       __simplified_type_enum(field_type)
     end
   end
-  alias __simplified_type_enum simplified_type
 
+  alias __extract_limit_enum extract_limit
   def extract_limit(sql_type)
     if sql_type =~ /^enum/i
       sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
@@ -66,7 +67,6 @@ private
       __extract_limit_enum(sql_type)
     end
   end
-  alias __extract_limit_enum extract_limit
 
   def string_to_valid_enum(str)
     @valid_strings_filter ||= Hash[enum_valid_string_assoc]
