@@ -78,6 +78,19 @@ column_class.class_eval do
 private
 
   # Deprecated in Rails 4.2
+  if respond_to?(:simplified_type)
+    alias __simplified_type_enum simplified_type
+    # The enum simple type.
+    def simplified_type(field_type)
+      if field_type =~ /enum/i
+        :enum
+      else
+        __simplified_type_enum(field_type)
+      end
+    end
+  end
+
+  # Deprecated in Rails 4.2
   if respond_to?(:extract_limit)
     alias __extract_limit_enum extract_limit
     def extract_limit(sql_type)
