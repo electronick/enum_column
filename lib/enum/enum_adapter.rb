@@ -11,13 +11,15 @@ if adapter_class
   adapter_class.class_eval do
 
     protected
-      def initialize_type_map_with_enum_types(m)
-        initialize_type_map_without_enum_types(m)
-        m.register_type(%r(enum)i) do |sql_type|
-          limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
-          ActiveRecord::Type::Enum.new(limit: limit)
+      if respond_to?(:initialize_type_map)
+        def initialize_type_map_with_enum_types(m)
+          initialize_type_map_without_enum_types(m)
+          m.register_type(%r(enum)i) do |sql_type|
+            limit = sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
+            ActiveRecord::Type::Enum.new(limit: limit)
+          end
         end
+        alias_method_chain :initialize_type_map, :enum_types
       end
-      alias_method_chain :initialize_type_map, :enum_types
   end
 end
