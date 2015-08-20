@@ -2,7 +2,7 @@ Overview
 
   This gem is an extension to ActiveRecord which enables native support of enumerations in the database schema using the ENUM type in MySQL.
   Currently only MySQL is implemented.
-  Tested with Rails 3. For Rails 2 the enum-column plugin serves the same functionality but is vulnerable to DOS attacks with typical use.
+  Tested with Rails 3, for Rails 2 you should better use enum-column plugin (http://rubyforge.org/projects/enum-column/)
   Works with Scaffolding.
 
   Supported adapters:
@@ -12,9 +12,9 @@ Overview
 
 How to use it.
 
-In your Gemfile:
+In you Gemfile:
 
-  gem 'enum_column_strict'
+  gem 'enum_column3'
 
 In your schema:
 
@@ -43,18 +43,13 @@ You can always use the column reflection to get the list of possible values from
     Enumeration.columns_hash['color'].limit
     or
     @enumeration.column_for_attribute(:color).limit
-
+    
     Will yield: [:red, :blue, :green, :yellow]
-
-If you assign a string to the column, it will be converted to a symbol if it's valid, and nil otherwise,
-so if this is the only way you populate color, validates_presence_of may be the only validation you need.
-
-    Enumeration.new(:color => "red") (color will be :red)
-    Enumeration.new(:color => "infrared") (color will be nil)
+   
 
 In views:
 
-  You can use the enum_select helper to generate input for enumerated attributes:
+  You can use enum_select helper to generate input for enumerated attribute as:
 
      <%= enum_select(@enumeration, 'severity')%>
      or
