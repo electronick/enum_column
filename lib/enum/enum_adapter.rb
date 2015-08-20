@@ -11,7 +11,7 @@ if adapter_class
   adapter_class.class_eval do
 
     protected
-      if respond_to?(:initialize_type_map)
+      if instance_methods.include?(:initialize_type_map)
         def initialize_type_map_with_enum_types(m)
           initialize_type_map_without_enum_types(m)
           m.register_type(%r(enum)i) do |sql_type|
