@@ -27,15 +27,24 @@ column_class.class_eval do
     end
   end
 
+  def __enum_type_cast(value)
+    if type == :enum
+      self.class.value_to_symbol(value)
+    else
+      __type_cast_enum(value)
+    end
+  end
+
   if respond_to?(:type_cast_from_database)
     alias __type_cast_enum type_cast_from_database
     # Convert to a symbol.
     def type_cast_from_database(value)
-      if type == :enum
-        self.class.value_to_symbol(value)
-      else
-        __type_cast_enum(value)
-      end
+      __enum_type_cast(value)
+    end
+  elsif respond_to?(:type_cast)
+    alias __type_cast_enum type_cast
+    def type_cast(value)
+      __enum_type_cast(value)
     end
   end
 
