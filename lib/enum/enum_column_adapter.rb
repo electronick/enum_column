@@ -35,13 +35,13 @@ column_class.class_eval do
     end
   end
 
-  if respond_to?(:type_cast_from_database)
+  if method_defined?(:type_cast_from_database)
     alias __type_cast_enum type_cast_from_database
     # Convert to a symbol.
     def type_cast_from_database(value)
       __enum_type_cast(value)
     end
-  elsif respond_to?(:type_cast)
+  elsif method_defined?(:type_cast)
     alias __type_cast_enum type_cast
     def type_cast(value)
       __enum_type_cast(value)
@@ -49,7 +49,7 @@ column_class.class_eval do
   end
 
   # Deprecated in Rails 4.1
-  if respond_to?(:type_cast_code)
+  if method_defined?(:type_cast_code)
     alias __type_cast_code_enum type_cast_code
     # Code to convert to a symbol.
     def type_cast_code(var_name)
@@ -78,7 +78,7 @@ column_class.class_eval do
 private
 
   # Deprecated in Rails 4.2
-  if respond_to?(:simplified_type)
+  if method_defined?(:simplified_type)
     alias __simplified_type_enum simplified_type
     # The enum simple type.
     def simplified_type(field_type)
@@ -91,7 +91,7 @@ private
   end
 
   # Deprecated in Rails 4.2
-  if respond_to?(:extract_limit)
+  if method_defined?(:extract_limit)
     alias __extract_limit_enum extract_limit
     def extract_limit(sql_type)
       if sql_type =~ /^enum/i
