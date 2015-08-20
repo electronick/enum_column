@@ -6,7 +6,7 @@ if defined? ActiveRecord::Type::Value
           :enum
         end
 
-        def type_cast_for_database
+        def type_cast_for_database(value)
           value.to_s
         end
 
