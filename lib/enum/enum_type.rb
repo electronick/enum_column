@@ -7,13 +7,17 @@ if defined? ActiveRecord::Type::Value
         end
 
         def type_cast_for_database(value)
-          value.to_s
+          if value.nil? || value == ''
+            nil
+          else
+            value.to_s
+          end
         end
 
         private
 
           def cast_value(value)
-            if value == ''
+            if value.nil? || value == ''
               nil
             else
               value.to_sym
