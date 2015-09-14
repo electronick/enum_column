@@ -27,6 +27,20 @@ column_class.class_eval do
     end
   end
 
+  if instance_methods.include?(:extract_default)
+    alias __extract_default_enum extract_default
+    def extract_default
+      if type == :enum
+        if @default == '' || @default.nil?
+          @default = nil
+        else
+          @default = @default.intern
+        end
+      end
+      __extract_default_enum
+    end
+  end
+
   def __enum_type_cast(value)
     if type == :enum
       self.class.value_to_symbol(value)
