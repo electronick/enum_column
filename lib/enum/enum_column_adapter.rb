@@ -19,16 +19,6 @@ end
 
 column_class.class_eval do
 
-  alias __klass_enum klass
-  # The class for enum is Symbol.
-  def klass
-    if type == :enum
-      Symbol
-    else
-      __klass_enum
-    end
-  end
-
   if instance_methods.include?(:extract_default)
     alias __extract_default_enum extract_default
     def extract_default
