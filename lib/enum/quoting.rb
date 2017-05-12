@@ -5,9 +5,9 @@ module ActiveRecord
 
       # Quote a symbol as a normal string. This will support quoting of
       # enumerated values.
-      def quote(value, column = nil)
+      def quote(value)
         if !value.is_a? Symbol
-          __quote_enum(value, column)
+          __quote_enum(value)
         else
           ActiveRecord::Base.send(:quote_bound_value, value.to_s)
         end
