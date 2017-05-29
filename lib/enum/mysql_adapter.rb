@@ -25,7 +25,7 @@ module EnumColumn
       # be done on a per adapter basis, but is generalized here.
       #
       # will generate enum('a', 'b', 'c') for :limit => [:a, :b, :c]
-      def type_to_sql(type, limit = nil, precision = nil, scale = nil)
+      def type_to_sql(type, limit: nil, precision: nil, scale: nil, unsigned: nil, **) # :nodoc:
         if type.to_s == 'enum'
           native = native_database_types[type]
           column_type_sql = (native || {})[:name] || 'enum'
@@ -34,7 +34,7 @@ module EnumColumn
 
           column_type_sql
         else
-          super(type, limit, precision, scale)
+          super(type, limit: limit, precision: precision, scale: scale, unsigned: unsigned)
         end
       end
 
