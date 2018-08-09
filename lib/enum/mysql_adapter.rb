@@ -39,7 +39,7 @@ module EnumColumn
       end
 
       private
-        def initialize_type_map(m)
+        def initialize_type_map(m = type_map)
           super
 
           m.register_type(%r(enum)i) do |sql_type|
