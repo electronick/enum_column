@@ -51,4 +51,6 @@ module EnumColumn
   end
 end
 
-adapter_class.prepend(EnumColumn::ConnectionAdapters::EnumAdapter)
+if adapter_class
+  adapter_class.prepend(EnumColumn::ConnectionAdapters::EnumAdapter)
+end

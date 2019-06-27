@@ -13,99 +13,99 @@ elsif defined? ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
   ActiveRecord::ConnectionAdapters::MysqlAdapter::Column
 elsif defined? ActiveRecord::ConnectionAdapters::MySQL::Column
   ActiveRecord::ConnectionAdapters::MySQL::Column
-else
-  ObviousHint::NoMysqlAdapterFound
 end
 
-column_class.class_eval do
+if column_class
+  column_class.class_eval do
 
-  if instance_methods.include?(:extract_default)
-    alias __extract_default_enum extract_default
-    def extract_default
+    if instance_methods.include?(:extract_default)
+      alias __extract_default_enum extract_default
+      def extract_default
+        if type == :enum
+          if @default == '' || @default.nil?
+            @default = nil
+          else
+            @default = @default.intern
+          end
+        end
+        __extract_default_enum
+      end
+    end
+
+    def __enum_type_cast(value)
       if type == :enum
-        if @default == '' || @default.nil?
-          @default = nil
+        self.class.value_to_symbol(value)
+      else
+        __type_cast_enum(value)
+      end
+    end
+
+    if instance_methods.include?(:type_cast_from_database)
+      alias __type_cast_enum type_cast_from_database
+      # Convert to a symbol.
+      def type_cast_from_database(value)
+        __enum_type_cast(value)
+      end
+    elsif instance_methods.include?(:type_cast)
+      alias __type_cast_enum type_cast
+      def type_cast(value)
+        __enum_type_cast(value)
+      end
+    end
+
+    # Deprecated in Rails 4.1
+    if instance_methods.include?(:type_cast_code)
+      alias __type_cast_code_enum type_cast_code
+      # Code to convert to a symbol.
+      def type_cast_code(var_name)
+        if type == :enum
+          "#{self.class.name}.value_to_symbol(#{var_name})"
         else
-          @default = @default.intern
+          __type_cast_code_enum(var_name)
         end
       end
-      __extract_default_enum
     end
-  end
 
-  def __enum_type_cast(value)
-    if type == :enum
-      self.class.value_to_symbol(value)
-    else
-      __type_cast_enum(value)
-    end
-  end
-
-  if instance_methods.include?(:type_cast_from_database)
-    alias __type_cast_enum type_cast_from_database
-    # Convert to a symbol.
-    def type_cast_from_database(value)
-      __enum_type_cast(value)
-    end
-  elsif instance_methods.include?(:type_cast)
-    alias __type_cast_enum type_cast
-    def type_cast(value)
-      __enum_type_cast(value)
-    end
-  end
-
-  # Deprecated in Rails 4.1
-  if instance_methods.include?(:type_cast_code)
-    alias __type_cast_code_enum type_cast_code
-    # Code to convert to a symbol.
-    def type_cast_code(var_name)
-      if type == :enum
-        "#{self.class.name}.value_to_symbol(#{var_name})"
-      else
-        __type_cast_code_enum(var_name)
+    class << self
+      # Safely convert the value to a symbol.
+      def value_to_symbol(value)
+        case value
+        when Symbol
+          value
+        when String
+          value.empty? ? nil : value.intern
+        else
+          nil
+        end
       end
     end
-  end
 
-  class << self
-    # Safely convert the value to a symbol.
-    def value_to_symbol(value)
-      case value
-      when Symbol
-        value
-      when String
-        value.empty? ? nil : value.intern
-      else
-        nil
+  private
+
+    # Deprecated in Rails 4.2
+    if private_instance_methods.include?(:simplified_type)
+      alias __simplified_type_enum simplified_type
+      # The enum simple type.
+      def simplified_type(field_type)
+        if field_type =~ /enum/i
+          :enum
+        else
+          __simplified_type_enum(field_type)
+        end
       end
     end
-  end
 
-private
-
-  # Deprecated in Rails 4.2
-  if private_instance_methods.include?(:simplified_type)
-    alias __simplified_type_enum simplified_type
-    # The enum simple type.
-    def simplified_type(field_type)
-      if field_type =~ /enum/i
-        :enum
-      else
-        __simplified_type_enum(field_type)
+    # Deprecated in Rails 4.2
+    if private_instance_methods.include?(:extract_limit)
+      alias __extract_limit_enum extract_limit
+      def extract_limit(sql_type)
+        if sql_type =~ /^enum/i
+          sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
+        else
+          __extract_limit_enum(sql_type)
+        end
       end
     end
-  end
 
-  # Deprecated in Rails 4.2
-  if private_instance_methods.include?(:extract_limit)
-    alias __extract_limit_enum extract_limit
-    def extract_limit(sql_type)
-      if sql_type =~ /^enum/i
-        sql_type.sub(/^enum\('(.+)'\)/i, '\1').split("','").map { |v| v.intern }
-      else
-        __extract_limit_enum(sql_type)
-      end
-    end
   end
-
 end
